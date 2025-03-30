@@ -7,7 +7,7 @@ from ocr import perform_ocr, perform_ocr_and_log
 from capture_scheduler import CaptureScheduler
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 SCREENSHOT_DIR = os.path.join("static", "screenshots")
 scheduler = CaptureScheduler(interval=10)  # Set default interval (in seconds)

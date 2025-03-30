@@ -1,0 +1,43 @@
+.app-container {
+    max-width: 960px;
+    margin: auto;
+    padding: 1rem;
+    font-family: sans-serif;
+  }
+  
+  header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .control-panel {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  button {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+  }
+  
+  .gallery .images {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .gallery img {
+    height: 120px;
+    cursor: pointer;
+    border-radius: 8px;
+  }
+  
+  .ocr-viewer {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: #f0f0f0;
+    border-radius: 6px;
+  }
+  

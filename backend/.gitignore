@@ -1,0 +1,36 @@
+# Byte-compiled / compiled files
+__pycache__/
+*.py[cod]
+*.so
+
+# Virtual environment
+venv/
+env/
+
+# VS Code and IDE files
+.vscode/
+.idea/
+
+# macOS files
+.DS_Store
+
+# Log and data files
+*.log
+*.csv
+data/ocr_logs.csv
+
+# OS files
+Thumbs.db
+
+# Python environment files
+*.env
+.env
+
+# Flask cache or debug files
+instance/
+*.db
+*.sqlite3
+
+# Screenshot outputs (keep the folder but not the contents)
+static/screenshots/*
+!static/screenshots/.gitkeep

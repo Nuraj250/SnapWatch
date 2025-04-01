@@ -1,18 +1,18 @@
-import pytesseract
-from PIL import Image
 import os
 import csv
 from datetime import datetime
+import easyocr
 
 LOG_FILE = os.path.join("data", "ocr_logs.csv")
 os.makedirs("data", exist_ok=True)
 
+reader = easyocr.Reader(['en'])  # Only once
+
 def perform_ocr(image_path):
     if not os.path.exists(image_path):
         return None
-    img = Image.open(image_path)
-    text = pytesseract.image_to_string(img)
-    return text.strip()
+    result = reader.readtext(image_path, detail=0)
+    return "\n".join(result)
 
 def perform_ocr_and_log(filename):
     image_path = os.path.join("static", "screenshots", filename)

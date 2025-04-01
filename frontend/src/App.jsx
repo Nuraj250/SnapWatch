@@ -15,14 +15,38 @@ function App() {
   const [ocrEnabled, setOcrEnabled] = useState(true);
   const [isCapturing, setIsCapturing] = useState(false);
 
+  useEffect(() => {
+    let interval = null;
+  
+    if (isCapturing) {
+      interval = setInterval(() => {
+        fetchScreenshots();
+      }, 3000); // every 3 seconds
+    }
+  
+    return () => clearInterval(interval); // cleanup when not capturing
+  }, [isCapturing]);
+  
   const fetchScreenshots = async () => {
     const res = await axios.get(`${API_BASE}/screenshots`);
     setScreenshots(res.data);
   };
 
   const takeScreenshot = async () => {
-    await axios.post(`${API_BASE}/screenshot`, { ocr: ocrEnabled });
-    fetchScreenshots();
+    try {
+      const res = await axios.post(`${API_BASE}/screenshot`, { ocr: ocrEnabled });
+      const newFile = res.data.filename;
+  
+      // Add the new screenshot to the top of the gallery
+      setScreenshots((prev) => [newFile, ...prev]);
+  
+      if (ocrEnabled && res.data.ocr_text) {
+        setSelected(newFile);
+        setOcrText(res.data.ocr_text);
+      }
+    } catch (err) {
+      console.error("❌ Screenshot error:", err);
+    }
   };
 
   const toggleAutoCapture = async () => {

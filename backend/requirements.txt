@@ -1,5 +1,5 @@
 flask
 flask-cors
+easyocr
+mss
 pillow
-pytesseract
-flask-cors

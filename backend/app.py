@@ -1,3 +1,4 @@
+import traceback
 from flask import Flask, jsonify, send_from_directory, request
 from flask_cors import CORS
 import os
@@ -14,16 +15,21 @@ scheduler = CaptureScheduler(interval=10)  # Set default interval (in seconds)
 
 @app.route("/screenshot", methods=["POST"])
 def screenshot():
-    filename = take_screenshot()
-    do_ocr = request.json.get("ocr", False)
+    try:
+        filename = take_screenshot()
+        do_ocr = request.json.get("ocr", False)
 
-    response = {"filename": filename}
+        response = {"filename": filename}
 
-    if do_ocr:
-        text = perform_ocr_and_log(filename)
-        response["ocr_text"] = text
+        if do_ocr:
+            text = perform_ocr_and_log(filename)
+            response["ocr_text"] = text
 
-    return jsonify(response)
+        return jsonify(response)
+    except Exception as e:
+        print("🔥 ERROR in /screenshot:", e)
+        traceback.print_exc()  # 👈 This will print the full error stack
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/screenshots", methods=["GET"])
 def list_screenshots():
